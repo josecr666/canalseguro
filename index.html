@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="CanalSeguro es un canal independiente de denuncia ciudadana cifrada para Colombia: anónimo, sin cuenta y con seguimiento por código único." />
   <title>CanalSeguro — Canal de denuncia ciudadana cifrada</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -371,10 +372,16 @@
     if (!state.category) { alert('Por favor selecciona una categoría antes de continuar.'); return; }
     showPage('paso2');
   }
+  const MAX_FILE_BYTES = 25 * 1024 * 1024; // 25 MB por archivo, como anuncia la UI.
   function handleFiles(input) {
     const list = document.getElementById('fileList');
     list.innerHTML = '';
-    state.files = Array.from(input.files);
+    const incoming = Array.from(input.files);
+    const rejected = incoming.filter(f => f.size > MAX_FILE_BYTES);
+    state.files = incoming.filter(f => f.size <= MAX_FILE_BYTES);
+    if (rejected.length) {
+      alert('Se omitieron ' + rejected.length + ' archivo(s) que superan el límite de 25 MB:\n' + rejected.map(f => '• ' + f.name).join('\n'));
+    }
     state.files.forEach(f => { const item = document.createElement('div'); item.style.cssText = 'display:flex;align-items:center;gap:8px;font-size:13px;color:var(--secondary);'; item.textContent = f.name + ' (' + (f.size/1024).toFixed(1) + ' KB)'; list.appendChild(item); });
   }
   function goToPaso3() {
@@ -398,8 +405,17 @@
   }
   function generateCode() {
     const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-    const seg = () => Array.from({length:4}, () => chars[Math.floor(Math.random()*chars.length)]).join('');
-    return 'CS-' + seg() + '-' + seg() + '-' + seg();
+    // Generación criptográficamente segura; evita Math.random() que es predecible.
+    const pick = (n) => {
+      if (window.crypto && window.crypto.getRandomValues) {
+        const buf = new Uint32Array(n);
+        window.crypto.getRandomValues(buf);
+        return Array.from(buf, v => chars[v % chars.length]);
+      }
+      return Array.from({length:n}, () => chars[Math.floor(Math.random()*chars.length)]);
+    };
+    const all = pick(12);
+    return 'CS-' + all.slice(0,4).join('') + '-' + all.slice(4,8).join('') + '-' + all.slice(8,12).join('');
   }
   function copiarCodigo() {
     const code = document.getElementById('genCode').textContent;
@@ -422,6 +438,15 @@
     document.querySelectorAll('.faq-item__q').forEach(q => { q.classList.remove('open'); q.nextElementSibling.classList.remove('open'); });
     if (!isOpen) { el.classList.add('open'); answer.classList.add('open'); }
   }
+  // Accesibilidad: los elementos con onclick que no son nativamente enfocables
+  // (a sin href, span, div) se vuelven operables con teclado (Tab + Enter/Espacio).
+  document.querySelectorAll('a[onclick], span[onclick], div[onclick]').forEach(el => {
+    if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
+    if (!el.hasAttribute('role')) el.setAttribute('role', 'button');
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.click(); }
+    });
+  });
   const dz = document.getElementById('dropzone');
   if (dz) {
     dz.addEventListener('dragover', e => { e.preventDefault(); dz.style.borderColor = 'var(--primary)'; });

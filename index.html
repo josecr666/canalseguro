@@ -8,6 +8,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
   <style>
+    /* ==============================
+       TOKENS & RESET
+    ============================== */
     :root {
       --primary:   #0F1F3A;
       --secondary: #6B7280;
@@ -20,65 +23,280 @@
       --radius:    4px;
       --max-w:     1200px;
       --form-w:    720px;
+      --space:     8px;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body { font-family: 'Inter', sans-serif; font-size: 16px; line-height: 1.6; color: var(--text); background: var(--bg); min-height: 100vh; display: flex; flex-direction: column; }
+    body {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--text);
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
     a { color: inherit; text-decoration: none; }
     ul { list-style: none; }
+    img { max-width: 100%; display: block; }
     .mono { font-family: 'JetBrains Mono', monospace; }
-    .container { width: 100%; max-width: var(--max-w); margin: 0 auto; padding: 0 48px; }
-    .container--form { max-width: var(--form-w); }
+
+    /* ==============================
+       LAYOUT UTILITIES
+    ============================== */
+    .container {
+      width: 100%;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+    .container--form {
+      max-width: var(--form-w);
+    }
     .page { display: none; flex: 1; flex-direction: column; }
     .page.active { display: flex; }
-    .navbar { position: sticky; top: 0; z-index: 100; background: var(--bg); border-bottom: 1px solid var(--border); }
-    .navbar__inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
-    .navbar__logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; color: var(--primary); cursor: pointer; }
-    .navbar__logo-icon { width: 32px; height: 32px; background: var(--primary); border-radius: 6px; display: flex; align-items: center; justify-content: center; }
-    .navbar__nav { display: flex; gap: 32px; }
-    .navbar__nav a { font-size: 14px; font-weight: 500; color: var(--secondary); transition: color .15s; cursor: pointer; }
+
+    /* ==============================
+       NAVBAR
+    ============================== */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .navbar__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    .navbar__logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--primary);
+      cursor: pointer;
+    }
+    .navbar__logo-icon {
+      width: 32px; height: 32px;
+      background: var(--primary);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .navbar__logo-icon svg { color: white; }
+    .navbar__nav {
+      display: flex;
+      gap: 32px;
+    }
+    .navbar__nav a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--secondary);
+      transition: color .15s;
+      cursor: pointer;
+    }
     .navbar__nav a:hover { color: var(--primary); }
+
+    /* FORM NAVBAR (reduced) */
     .navbar--form .navbar__inner { justify-content: space-between; }
-    .navbar--form .navbar__exit { font-size: 14px; font-weight: 500; color: var(--secondary); cursor: pointer; display: flex; align-items: center; gap: 6px; }
-    footer { background: var(--primary); color: rgba(255,255,255,.7); font-size: 13px; padding: 20px 0; margin-top: auto; }
-    .footer__inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .navbar--form .navbar__exit {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--secondary);
+      cursor: pointer;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .navbar--form .navbar__exit:hover { color: var(--primary); }
+
+    /* ==============================
+       FOOTER
+    ============================== */
+    footer {
+      background: var(--primary);
+      color: rgba(255,255,255,.7);
+      font-size: 13px;
+      padding: 20px 0;
+      margin-top: auto;
+    }
+    .footer__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
     footer a { color: rgba(255,255,255,.7); cursor: pointer; }
     footer a:hover { color: white; }
     .footer__links { display: flex; gap: 24px; }
-    .security-bar { background: var(--primary); color: rgba(255,255,255,.85); font-size: 13px; text-align: center; padding: 10px; display: flex; align-items: center; justify-content: center; gap: 8px; }
-    .btn { display: inline-flex; align-items: center; gap: 6px; padding: 0 24px; height: 44px; border-radius: var(--radius); font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer; border: none; transition: opacity .15s, transform .1s; white-space: nowrap; }
+
+    /* SECURITY BAR */
+    .security-bar {
+      background: var(--primary);
+      color: rgba(255,255,255,.85);
+      font-size: 13px;
+      text-align: center;
+      padding: 10px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .security-bar svg { flex-shrink: 0; }
+
+    /* ==============================
+       BUTTONS
+    ============================== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 24px;
+      height: 44px;
+      border-radius: var(--radius);
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: opacity .15s, transform .1s;
+      white-space: nowrap;
+    }
     .btn:hover { opacity: .88; }
     .btn:active { transform: scale(.98); }
     .btn--primary { background: var(--primary); color: white; }
-    .btn--ghost { background: transparent; color: var(--primary); border: 1.5px solid var(--primary); }
+    .btn--ghost {
+      background: transparent;
+      color: var(--primary);
+      border: 1.5px solid var(--primary);
+    }
+    .btn--success { background: var(--success); color: white; }
     .btn--sm { height: 36px; font-size: 14px; padding: 0 16px; }
-    .card { background: var(--bg-soft); border: 1px solid var(--border); border-radius: 8px; padding: 24px; }
-    .card--radio { cursor: pointer; transition: border-color .15s, background .15s; }
+
+    /* ==============================
+       CARDS
+    ============================== */
+    .card {
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px;
+    }
+    .card--radio {
+      cursor: pointer;
+      transition: border-color .15s, background .15s;
+    }
     .card--radio:hover { border-color: var(--primary); background: #f0f4ff; }
-    .card--radio.selected { border-color: var(--primary); background: #eef2ff; }
-    .alert { border-radius: var(--radius); padding: 14px 18px; font-size: 14px; line-height: 1.5; display: flex; gap: 10px; align-items: flex-start; }
+    .card--radio.selected {
+      border-color: var(--primary);
+      background: #eef2ff;
+    }
+
+    /* ==============================
+       ALERTS
+    ============================== */
+    .alert {
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      font-size: 14px;
+      line-height: 1.5;
+      display: flex; gap: 10px; align-items: flex-start;
+    }
     .alert--amber { background: #FFFBEB; border: 1px solid #FCD34D; color: #92400E; }
     .alert--green { background: #ECFDF5; border: 1px solid #6EE7B7; color: #065F46; }
     .alert--blue  { background: #EFF6FF; border: 1px solid #BFDBFE; color: #1E40AF; }
+    .alert svg { flex-shrink: 0; margin-top: 2px; }
+
+    /* ==============================
+       FORM ELEMENTS
+    ============================== */
     .form-group { display: flex; flex-direction: column; gap: 6px; }
-    .form-label { font-size: 14px; font-weight: 600; color: var(--text); }
+    .form-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+    }
     .form-label .req { color: var(--accent); margin-left: 2px; }
-    .form-input, .form-textarea { width: 100%; height: 44px; padding: 0 14px; border: 1.5px solid var(--border); border-radius: var(--radius); font-family: inherit; font-size: 15px; color: var(--text); background: var(--bg); transition: border-color .15s; outline: none; }
-    .form-input:focus, .form-textarea:focus { border-color: var(--primary); }
-    .form-textarea { height: 140px; resize: vertical; padding: 12px 14px; line-height: 1.6; }
+    .form-input, .form-textarea, .form-select {
+      width: 100%;
+      height: 44px;
+      padding: 0 14px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      font-family: inherit;
+      font-size: 15px;
+      color: var(--text);
+      background: var(--bg);
+      transition: border-color .15s;
+      outline: none;
+    }
+    .form-input:focus, .form-textarea:focus, .form-select:focus {
+      border-color: var(--primary);
+    }
+    .form-textarea {
+      height: 140px;
+      resize: vertical;
+      padding: 12px 14px;
+      line-height: 1.6;
+    }
     .form-hint { font-size: 13px; color: var(--secondary); }
-    .dropzone { border: 2px dashed var(--border); border-radius: 8px; padding: 40px 20px; text-align: center; cursor: pointer; transition: border-color .15s, background .15s; background: var(--bg-soft); }
+
+    /* Drop zone */
+    .dropzone {
+      border: 2px dashed var(--border);
+      border-radius: 8px;
+      padding: 40px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color .15s, background .15s;
+      background: var(--bg-soft);
+    }
     .dropzone:hover { border-color: var(--primary); background: #f0f4ff; }
+    .dropzone__icon { color: var(--secondary); margin: 0 auto 12px; }
     .dropzone__text { font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
     .dropzone__hint { font-size: 13px; color: var(--secondary); }
-    .checkbox-wrap { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; }
-    .checkbox-wrap input[type="checkbox"] { width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px; accent-color: var(--primary); cursor: pointer; }
+
+    /* Checkbox */
+    .checkbox-wrap {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      cursor: pointer;
+    }
+    .checkbox-wrap input[type="checkbox"] {
+      width: 18px; height: 18px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
     .checkbox-wrap span { font-size: 14px; line-height: 1.5; }
-    .progress { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--secondary); margin-bottom: 32px; }
+
+    /* ==============================
+       PROGRESS INDICATOR
+    ============================== */
+    .progress {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--secondary);
+      margin-bottom: 32px;
+    }
     .progress__dots { display: flex; gap: 6px; }
-    .progress__dot { width: 10px; height: 10px; border-radius: 50%; background: var(--border); transition: background .2s; }
+    .progress__dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--border);
+      transition: background .2s;
+    }
     .progress__dot.active { background: var(--primary); }
     .progress__dot.done { background: var(--success); }
+
+    /* ==============================
+       REVIEW TABLE
+    ============================== */
     .review-table { width: 100%; border-collapse: collapse; }
     .review-table tr { border-bottom: 1px solid var(--border); }
     .review-table td { padding: 14px 0; vertical-align: top; font-size: 14px; }
@@ -86,35 +304,129 @@
     .review-table td:last-child { text-align: right; }
     .review-table .edit-link { color: var(--primary); font-weight: 600; cursor: pointer; font-size: 13px; }
     .review-table .edit-link:hover { text-decoration: underline; }
+
+    /* ==============================
+       TIMELINE
+    ============================== */
     .timeline { display: flex; flex-direction: column; gap: 0; }
     .timeline__item { display: flex; gap: 16px; position: relative; }
-    .timeline__item:not(:last-child) .timeline__line { position: absolute; left: 7px; top: 22px; width: 2px; height: calc(100% - 6px); background: var(--border); }
-    .timeline__dot { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--border); background: var(--bg); flex-shrink: 0; margin-top: 4px; z-index: 1; }
+    .timeline__item:not(:last-child) .timeline__line {
+      position: absolute;
+      left: 7px; top: 22px;
+      width: 2px;
+      height: calc(100% - 6px);
+      background: var(--border);
+    }
+    .timeline__dot {
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      background: var(--bg);
+      flex-shrink: 0;
+      margin-top: 4px;
+      z-index: 1;
+      transition: background .2s, border-color .2s;
+    }
     .timeline__dot.done { background: var(--primary); border-color: var(--primary); }
     .timeline__dot.pending { background: var(--bg); border-color: var(--border); }
     .timeline__body { padding-bottom: 28px; }
     .timeline__date { font-size: 12px; color: var(--secondary); margin-bottom: 2px; }
     .timeline__title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
     .timeline__desc { font-size: 13px; color: var(--secondary); }
-    .status-badge { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+    .status-badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
     .status-badge--review { background: #FFFBEB; color: #92400E; border: 1px solid #FCD34D; }
-    .code-box { background: var(--bg-soft); border: 1.5px solid var(--border); border-radius: 8px; padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-    .code-box__code { font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 600; letter-spacing: 0.08em; color: var(--primary); }
-    .faq-item { border-bottom: 1px solid var(--border); }
-    .faq-item__q { display: flex; align-items: center; justify-content: space-between; padding: 20px 0; cursor: pointer; font-weight: 600; font-size: 15px; }
+    .status-badge--received { background: #ECFDF5; color: #065F46; border: 1px solid #6EE7B7; }
+
+    /* ==============================
+       CODE BOX
+    ============================== */
+    .code-box {
+      background: var(--bg-soft);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .code-box__code {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--primary);
+    }
+
+    /* ==============================
+       FAQ ACCORDION
+    ============================== */
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+    .faq-item__q {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 0;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 15px;
+    }
     .faq-item__q svg { flex-shrink: 0; transition: transform .2s; color: var(--secondary); }
     .faq-item__q.open svg { transform: rotate(180deg); }
-    .faq-item__a { display: none; padding-bottom: 20px; font-size: 14px; line-height: 1.7; color: var(--secondary); }
+    .faq-item__a {
+      display: none;
+      padding-bottom: 20px;
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--secondary);
+    }
     .faq-item__a.open { display: block; }
-    .hero { padding: 80px 0 64px; }
-    .hero__title { font-size: 42px; font-weight: 700; line-height: 1.2; color: var(--primary); max-width: 520px; margin-bottom: 16px; }
-    .hero__sub { font-size: 17px; color: var(--secondary); max-width: 460px; margin-bottom: 32px; line-height: 1.6; }
+
+    /* ==============================
+       HOME — HERO
+    ============================== */
+    .hero {
+      padding: 80px 0 64px;
+    }
+    .hero__title {
+      font-size: 42px;
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--primary);
+      max-width: 520px;
+      margin-bottom: 16px;
+    }
+    .hero__sub {
+      font-size: 17px;
+      color: var(--secondary);
+      max-width: 460px;
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
     .hero__actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+    /* PILLARS */
     .pillars { background: var(--bg-soft); padding: 64px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
     .pillars__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-    .pillar__icon { width: 44px; height: 44px; background: var(--primary); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+    .pillar__icon {
+      width: 44px; height: 44px;
+      background: var(--primary);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 16px;
+    }
     .pillar__title { font-size: 17px; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
     .pillar__desc { font-size: 14px; color: var(--secondary); line-height: 1.6; }
+
+    /* STEPS PREVIEW */
     .steps-preview { padding: 64px 0; }
     .section-title { font-size: 26px; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
     .section-sub { font-size: 15px; color: var(--secondary); margin-bottom: 40px; }
@@ -122,97 +434,347 @@
     .step-num { font-size: 11px; font-weight: 700; letter-spacing: .1em; color: var(--secondary); margin-bottom: 8px; }
     .step-title { font-size: 17px; font-weight: 700; color: var(--primary); margin-bottom: 6px; }
     .step-desc { font-size: 14px; color: var(--secondary); line-height: 1.6; }
+
+    /* ==============================
+       HOW IT WORKS PAGE
+    ============================== */
     .how-step { border-bottom: 1px solid var(--border); padding: 32px 0; }
     .how-step:last-child { border-bottom: none; }
     .how-step__num { font-size: 11px; font-weight: 700; letter-spacing: .1em; color: var(--secondary); margin-bottom: 8px; }
     .how-step__title { font-size: 20px; font-weight: 700; color: var(--primary); margin-bottom: 10px; }
     .how-step__desc { font-size: 15px; color: var(--secondary); line-height: 1.7; max-width: 620px; }
+
     .guarantees-list { display: flex; flex-direction: column; gap: 12px; }
-    .guarantee-item { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--text); line-height: 1.5; }
-    .guarantee-item::before { content: '✓'; color: var(--success); font-weight: 700; flex-shrink: 0; font-size: 15px; }
-    .pgp-box { background: var(--bg-soft); border: 1.5px solid var(--border); border-radius: 8px; padding: 20px; font-family: 'JetBrains Mono', monospace; font-size: 12px; line-height: 1.6; color: var(--secondary); overflow-x: auto; }
+    .guarantee-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 14px; color: var(--text); line-height: 1.5;
+    }
+    .guarantee-item::before {
+      content: '✓';
+      color: var(--success);
+      font-weight: 700;
+      flex-shrink: 0;
+      font-size: 15px;
+    }
+
+    /* ==============================
+       ABOUT PAGE
+    ============================== */
+    .pgp-box {
+      background: var(--bg-soft);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      line-height: 1.6;
+      color: var(--secondary);
+      overflow-x: auto;
+    }
+
+    /* ==============================
+       SECTION PADDING
+    ============================== */
+    .section { padding: 64px 0; }
     .section--sm { padding: 40px 0; }
+
+    /* Page headers */
     .page-header { padding: 56px 0 40px; }
     .page-header__title { font-size: 34px; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
     .page-header__sub { font-size: 16px; color: var(--secondary); }
-    .form-wrapper { flex: 1; padding: 48px 24px; display: flex; flex-direction: column; }
-    .form-card { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 40px; max-width: var(--form-w); width: 100%; margin: 0 auto; }
+
+    /* ==============================
+       FORM PAGE WRAPPER
+    ============================== */
+    .form-wrapper {
+      flex: 1;
+      padding: 48px 24px;
+      display: flex;
+      flex-direction: column;
+    }
+    .form-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 40px;
+      max-width: var(--form-w);
+      width: 100%;
+      margin: 0 auto;
+    }
     .form-title { font-size: 26px; font-weight: 700; color: var(--primary); margin-bottom: 6px; }
     .form-subtitle { font-size: 14px; color: var(--secondary); margin-bottom: 32px; }
-    .form-actions { display: flex; align-items: center; justify-content: space-between; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--border); }
-    .form-actions .back-link { font-size: 14px; color: var(--secondary); cursor: pointer; display: flex; align-items: center; gap: 4px; }
+    .form-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+    .form-actions .back-link {
+      font-size: 14px;
+      color: var(--secondary);
+      cursor: pointer;
+      display: flex; align-items: center; gap: 4px;
+    }
     .form-actions .back-link:hover { color: var(--primary); }
-    .confirmation { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 64px 24px; text-align: center; }
-    .confirmation__icon { width: 72px; height: 72px; border-radius: 50%; background: var(--success); display: flex; align-items: center; justify-content: center; margin-bottom: 24px; }
+
+    /* ==============================
+       CONFIRMATION
+    ============================== */
+    .confirmation {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 64px 24px;
+      text-align: center;
+    }
+    .confirmation__icon {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: var(--success);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 24px;
+    }
     .confirmation__title { font-size: 28px; font-weight: 700; color: var(--primary); margin-bottom: 8px; }
     .confirmation__sub { font-size: 15px; color: var(--secondary); margin-bottom: 32px; max-width: 400px; }
     .confirmation__inner { max-width: 520px; width: 100%; }
     .recommendations { text-align: left; margin-top: 24px; }
     .recommendations ul { display: flex; flex-direction: column; gap: 8px; }
-    .recommendations li { display: flex; gap: 8px; font-size: 13px; color: var(--secondary); line-height: 1.5; }
+    .recommendations li {
+      display: flex; gap: 8px;
+      font-size: 13px; color: var(--secondary); line-height: 1.5;
+    }
     .recommendations li::before { content: '•'; color: var(--primary); flex-shrink: 0; font-size: 16px; line-height: 1.3; }
     .confirm-actions { display: flex; gap: 12px; margin-top: 32px; justify-content: center; flex-wrap: wrap; }
-    @media (max-width: 768px) { .container { padding: 0 20px; } .pillars__grid, .steps-grid { grid-template-columns: 1fr; } .hero__title { font-size: 30px; } .form-card { padding: 24px; } }
-    .mt-1 { margin-top: 8px; } .mt-2 { margin-top: 16px; } .mt-3 { margin-top: 24px; } .mt-4 { margin-top: 32px; } .mb-2 { margin-bottom: 16px; } .mb-3 { margin-bottom: 24px; }
-    :focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+
+    /* ==============================
+       RESPONSIVE
+    ============================== */
+    @media (max-width: 768px) {
+      .container { padding: 0 20px; }
+      .pillars__grid, .steps-grid { grid-template-columns: 1fr; }
+      .hero__title { font-size: 30px; }
+      .form-card { padding: 24px; }
+      .navbar__nav { gap: 16px; }
+      .review-table td:first-child { width: 110px; }
+    }
+
+    /* ==============================
+       UTILITY
+    ============================== */
+    .flex { display: flex; }
+    .flex-col { flex-direction: column; }
+    .items-center { align-items: center; }
+    .justify-between { justify-content: space-between; }
+    .gap-2 { gap: 16px; }
+    .gap-3 { gap: 24px; }
+    .gap-4 { gap: 32px; }
+    .mt-1 { margin-top: 8px; }
+    .mt-2 { margin-top: 16px; }
+    .mt-3 { margin-top: 24px; }
+    .mt-4 { margin-top: 32px; }
+    .mb-2 { margin-bottom: 16px; }
+    .mb-3 { margin-bottom: 24px; }
+    .text-sm { font-size: 14px; }
+    .text-secondary { color: var(--secondary); }
+    .font-bold { font-weight: 700; }
+    .w-full { width: 100%; }
+
+    /* ==============================
+       FOCUS VISIBLE ACCESSIBILITY
+    ============================== */
+    :focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+
+    /* fade-in */
     .page.active { animation: fadeIn .25s ease; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
   </style>
 </head>
 <body>
+
+<!-- ============================================================
+     SHARED NAV (normal) — shown on non-form pages
+============================================================ -->
 <nav class="navbar" id="navNormal">
-  <div class="container"><div class="navbar__inner">
-    <div class="navbar__logo" onclick="showPage('home')">
-      <div class="navbar__logo-icon"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2.2"><path d="M12 2L3 6v6c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V6L12 2z"/></svg></div>
-      CanalSeguro
+  <div class="container">
+    <div class="navbar__inner">
+      <div class="navbar__logo" onclick="showPage('home')">
+        <div class="navbar__logo-icon">
+          <!-- Shield icon -->
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2.2">
+            <path d="M12 2L3 6v6c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V6L12 2z"/>
+          </svg>
+        </div>
+        CanalSeguro
+      </div>
+      <ul class="navbar__nav">
+        <li><a onclick="showPage('como-funciona')">¿Cómo funciona?</a></li>
+        <li><a onclick="showPage('faq')">FAQ</a></li>
+        <li><a onclick="showPage('acerca-de')">Acerca de</a></li>
+      </ul>
     </div>
-    <ul class="navbar__nav">
-      <li><a onclick="showPage('como-funciona')">¿Cómo funciona?</a></li>
-      <li><a onclick="showPage('faq')">FAQ</a></li>
-      <li><a onclick="showPage('acerca-de')">Acerca de</a></li>
-    </ul>
-  </div></div>
-</nav>
-<nav class="navbar navbar--form" id="navForm" style="display:none">
-  <div class="container"><div class="navbar__inner">
-    <div class="navbar__logo" onclick="exitForm()"><div class="navbar__logo-icon"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2.2"><path d="M12 2L3 6v6c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V6L12 2z"/></svg></div>CanalSeguro</div>
-    <span class="navbar__exit" onclick="exitForm()"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M6 18L18 6M6 6l12 12"/></svg>Salir del formulario</span>
-  </div></div>
+  </div>
 </nav>
 
+<!-- SHARED NAV (form/reduced) — shown during form flow -->
+<nav class="navbar navbar--form" id="navForm" style="display:none">
+  <div class="container">
+    <div class="navbar__inner">
+      <div class="navbar__logo" onclick="exitForm()">
+        <div class="navbar__logo-icon">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2.2">
+            <path d="M12 2L3 6v6c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V6L12 2z"/>
+          </svg>
+        </div>
+        CanalSeguro
+      </div>
+      <span class="navbar__exit" onclick="exitForm()">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+        Salir del formulario
+      </span>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ============================================================
+     PAGE: HOME
+============================================================ -->
 <div class="page active" id="page-home">
-  <section class="hero"><div class="container">
-    <h1 class="hero__title">Un canal seguro para denunciar sin exponerte.</h1>
-    <p class="hero__sub">Corrupción, minería ilegal, crimen organizado y abuso de autoridad. Cifrado verificable, sin cuenta, con seguimiento por código.</p>
-    <div class="hero__actions">
-      <button class="btn btn--primary" onclick="showPage('paso1')"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>Enviar denuncia</button>
-      <button class="btn btn--ghost" onclick="showPage('consultar')"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>Consultar mi caso</button>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <h1 class="hero__title">Un canal seguro para denunciar sin exponerte.</h1>
+      <p class="hero__sub">Corrupción, minería ilegal, crimen organizado y abuso de autoridad. Cifrado verificable, sin cuenta, con seguimiento por código.</p>
+      <div class="hero__actions">
+        <button class="btn btn--primary" onclick="showPage('paso1')">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><path d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+          Enviar denuncia
+        </button>
+        <button class="btn btn--ghost" onclick="showPage('consultar')">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          Consultar mi caso
+        </button>
+      </div>
     </div>
-  </div></section>
-  <section class="pillars"><div class="container"><div class="pillars__grid">
-    <div class="card"><div class="pillar__icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><div class="pillar__title">Anónimo</div><div class="pillar__desc">Sin cuenta, sin correo, sin teléfono. No recolectamos datos que puedan identificarte.</div></div>
-    <div class="card"><div class="pillar__icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2"><path d="M12 2L3 6v6c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V6L12 2z"/></svg></div><div class="pillar__title">Independiente</div><div class="pillar__desc">Operado por un equipo externo a entidades estatales. Código y financiamiento públicos.</div></div>
-    <div class="card"><div class="pillar__icon"><svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2"><path d="M15 7h3a5 5 0 0 1 0 10h-3m-6 0H6A5 5 0 0 1 6 7h3"/><line x1="8" y1="12" x2="16" y2="12"/></svg></div><div class="pillar__title">Con seguimiento</div><div class="pillar__desc">Recibes un código único. Con él consultas el estado de tu caso cuando quieras.</div></div>
-  </div></div></section>
-  <section class="steps-preview"><div class="container">
-    <h2 class="section-title">¿Cómo funciona en 3 pasos?</h2>
-    <p class="section-sub">Sencillo, seguro y sin rastro.</p>
-    <div class="steps-grid">
-      <div class="card"><div class="step-num">01</div><div class="step-title">Describe</div><div class="step-desc">Selecciona la categoría y cuéntanos los hechos en tus propias palabras.</div></div>
-      <div class="card"><div class="step-num">02</div><div class="step-title">Adjunta</div><div class="step-desc">Documentos, fotos o audios (opcional). Limpiamos metadatos automáticamente.</div></div>
-      <div class="card"><div class="step-num">03</div><div class="step-title">Recibe código</div><div class="step-desc">Obtienes un código único. Con él consultas el estado sin identificarte.</div></div>
+  </section>
+
+  <!-- PILLARS -->
+  <section class="pillars">
+    <div class="container">
+      <div class="pillars__grid">
+        <!-- Anónimo -->
+        <div class="card">
+          <div class="pillar__icon">
+            <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+          </div>
+          <div class="pillar__title">Anónimo</div>
+          <div class="pillar__desc">Sin cuenta, sin correo, sin teléfono. No recolectamos datos que puedan identificarte.</div>
+        </div>
+        <!-- Independiente -->
+        <div class="card">
+          <div class="pillar__icon">
+            <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
+              <path d="M12 2L3 6v6c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V6L12 2z"/>
+            </svg>
+          </div>
+          <div class="pillar__title">Independiente</div>
+          <div class="pillar__desc">Operado por un equipo externo a entidades estatales. Código y financiamiento públicos.</div>
+        </div>
+        <!-- Con seguimiento -->
+        <div class="card">
+          <div class="pillar__icon">
+            <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
+              <path d="M15 7h3a5 5 0 0 1 0 10h-3m-6 0H6A5 5 0 0 1 6 7h3"/><line x1="8" y1="12" x2="16" y2="12"/>
+            </svg>
+          </div>
+          <div class="pillar__title">Con seguimiento</div>
+          <div class="pillar__desc">Recibes un código único. Con él consultas el estado de tu caso cuando quieras.</div>
+        </div>
+      </div>
     </div>
-    <button class="btn btn--ghost" onclick="showPage('como-funciona')">Ver flujo completo →</button>
-  </div></section>
-  <footer><div class="container"><div class="footer__inner"><span>© 2026 CanalSeguro · Operado de forma independiente</span><div class="footer__links"><a onclick="showPage('acerca-de')">Código abierto</a><a onclick="showPage('acerca-de')">Clave PGP</a><a onclick="showPage('acerca-de')">Acerca de</a><a onclick="showPage('faq')">Aviso legal</a></div></div></div></footer>
+  </section>
+
+  <!-- STEPS PREVIEW -->
+  <section class="steps-preview">
+    <div class="container">
+      <h2 class="section-title">¿Cómo funciona en 3 pasos?</h2>
+      <p class="section-sub">Sencillo, seguro y sin rastro.</p>
+      <div class="steps-grid">
+        <div class="card">
+          <div class="step-num">01</div>
+          <div class="step-title">Describe</div>
+          <div class="step-desc">Selecciona la categoría y cuéntanos los hechos en tus propias palabras.</div>
+        </div>
+        <div class="card">
+          <div class="step-num">02</div>
+          <div class="step-title">Adjunta</div>
+          <div class="step-desc">Documentos, fotos o audios (opcional). Limpiamos metadatos automáticamente.</div>
+        </div>
+        <div class="card">
+          <div class="step-num">03</div>
+          <div class="step-title">Recibe código</div>
+          <div class="step-desc">Obtienes un código único. Con él consultas el estado sin identificarte.</div>
+        </div>
+      </div>
+      <button class="btn btn--ghost" onclick="showPage('como-funciona')">Ver flujo completo →</button>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer__inner">
+        <span>© 2026 CanalSeguro · Operado de forma independiente</span>
+        <div class="footer__links">
+          <a onclick="showPage('acerca-de')">Código abierto</a>
+          <a onclick="showPage('acerca-de')">Clave PGP</a>
+          <a onclick="showPage('acerca-de')">Acerca de</a>
+          <a onclick="showPage('faq')">Aviso legal</a>
+        </div>
+      </div>
+    </div>
+  </footer>
 </div>
 
+
+<!-- ============================================================
+     PAGE: CÓMO FUNCIONA
+============================================================ -->
 <div class="page" id="page-como-funciona">
   <div class="container" style="flex:1">
-    <div class="page-header"><h1 class="page-header__title">¿Cómo funciona?</h1><p class="page-header__sub">Tres pasos. Nada más.</p></div>
-    <div class="how-step"><div class="how-step__num">PASO 01</div><div class="how-step__title">Describe lo que sabes</div><div class="how-step__desc">Selecciona la categoría del hecho y cuéntanos lo que sabes en tus propias palabras. No te pedimos nombre, correo, teléfono ni documento de identidad. Si quieres, puedes incluir fecha aproximada y lugar del hecho.</div></div>
-    <div class="how-step"><div class="how-step__num">PASO 02</div><div class="how-step__title">Adjunta evidencia (opcional)</div><div class="how-step__desc">Puedes subir documentos, fotos o audios que respalden tu denuncia. Antes de guardar cualquier archivo, eliminamos automáticamente los metadatos: coordenadas GPS de fotos, autor de documentos, fechas del sistema.</div></div>
-    <div class="how-step"><div class="how-step__num">PASO 03</div><div class="how-step__title">Recibe tu código de seguimiento</div><div class="how-step__desc">Al enviar, se genera un código único. Con él podrás consultar el estado del caso sin necesidad de registrarte ni identificarte. El código no puede recuperarse si lo pierdes; guárdalo apenas lo recibas.</div></div>
+    <div class="page-header">
+      <h1 class="page-header__title">¿Cómo funciona?</h1>
+      <p class="page-header__sub">Tres pasos. Nada más.</p>
+    </div>
+
+    <div class="how-step">
+      <div class="how-step__num">PASO 01</div>
+      <div class="how-step__title">Describe lo que sabes</div>
+      <div class="how-step__desc">Selecciona la categoría del hecho y cuéntanos lo que sabes en tus propias palabras. No te pedimos nombre, correo, teléfono ni documento de identidad. Si quieres, puedes incluir fecha aproximada y lugar del hecho.</div>
+    </div>
+
+    <div class="how-step">
+      <div class="how-step__num">PASO 02</div>
+      <div class="how-step__title">Adjunta evidencia (opcional)</div>
+      <div class="how-step__desc">Puedes subir documentos, fotos o audios que respalden tu denuncia. Antes de guardar cualquier archivo, eliminamos automáticamente los metadatos: coordenadas GPS de fotos, autor de documentos, fechas del sistema.</div>
+    </div>
+
+    <div class="how-step">
+      <div class="how-step__num">PASO 03</div>
+      <div class="how-step__title">Recibe tu código de seguimiento</div>
+      <div class="how-step__desc">Al enviar, se genera un código único. Con él podrás consultar el estado del caso sin necesidad de registrarte ni identificarte. El código no puede recuperarse si lo pierdes; guárdalo apenas lo recibas.</div>
+    </div>
+
     <div class="section--sm">
       <h2 class="section-title" style="margin-bottom:24px">Garantías técnicas</h2>
       <div class="guarantees-list">
@@ -225,208 +787,715 @@
       <button class="btn btn--primary mt-4" onclick="showPage('paso1')">Enviar mi denuncia</button>
     </div>
   </div>
-  <footer><div class="container"><div class="footer__inner"><span>© 2026 CanalSeguro · Operado de forma independiente</span><div class="footer__links"><a onclick="showPage('acerca-de')">Código abierto</a><a onclick="showPage('acerca-de')">Clave PGP</a><a onclick="showPage('acerca-de')">Acerca de</a></div></div></div></footer>
-</div>
 
-<div class="page" id="page-paso1">
-  <div class="form-wrapper"><div class="form-card container--form" style="margin:0 auto">
-    <div class="progress"><span>Paso 1 de 3</span><div class="progress__dots"><div class="progress__dot active"></div><div class="progress__dot"></div><div class="progress__dot"></div></div></div>
-    <div class="form-title">¿Qué quieres denunciar?</div>
-    <div class="form-subtitle">Selecciona la categoría principal del hecho.</div>
-    <div id="categoryOptions" style="display:flex;flex-direction:column;gap:12px">
-      <div class="card card--radio" onclick="selectCategory(this,'corrupcion')" data-val="corrupcion"><label style="cursor:pointer;display:flex;gap:12px;align-items:flex-start"><input type="radio" name="cat" value="corrupcion" style="margin-top:3px;accent-color:var(--primary);" /><div><div style="font-weight:600;color:var(--text);margin-bottom:3px">Corrupción administrativa</div><div style="font-size:13px;color:var(--secondary)">Contratación irregular, desvío de recursos, abuso del cargo</div></div></label></div>
-      <div class="card card--radio" onclick="selectCategory(this,'mineria')" data-val="mineria"><label style="cursor:pointer;display:flex;gap:12px;align-items:flex-start"><input type="radio" name="cat" value="mineria" style="margin-top:3px;accent-color:var(--primary);" /><div><div style="font-weight:600;color:var(--text);margin-bottom:3px">Minería ilegal y delitos ambientales</div><div style="font-size:13px;color:var(--secondary)">Extracción sin títulos, daño ambiental, mercurio</div></div></label></div>
-      <div class="card card--radio" onclick="selectCategory(this,'crimen')" data-val="crimen"><label style="cursor:pointer;display:flex;gap:12px;align-items:flex-start"><input type="radio" name="cat" value="crimen" style="margin-top:3px;accent-color:var(--primary);" /><div><div style="font-weight:600;color:var(--text);margin-bottom:3px">Crimen organizado</div><div style="font-size:13px;color:var(--secondary)">Grupos armados, extorsión, narcotráfico, trata</div></div></label></div>
-      <div class="card card--radio" onclick="selectCategory(this,'abuso')" data-val="abuso"><label style="cursor:pointer;display:flex;gap:12px;align-items:flex-start"><input type="radio" name="cat" value="abuso" style="margin-top:3px;accent-color:var(--primary);" /><div><div style="font-weight:600;color:var(--text);margin-bottom:3px">Abuso de autoridad</div><div style="font-size:13px;color:var(--secondary)">Excesos de funcionarios públicos o fuerza pública</div></div></label></div>
-      <div class="card card--radio" onclick="selectCategory(this,'otro')" data-val="otro"><label style="cursor:pointer;display:flex;gap:12px;align-items:flex-start"><input type="radio" name="cat" value="otro" style="margin-top:3px;accent-color:var(--primary);" /><div><div style="font-weight:600;color:var(--text);margin-bottom:3px">Otro</div><div style="font-size:13px;color:var(--secondary)">Describe en el siguiente paso</div></div></label></div>
-    </div>
-    <div class="form-actions"><span class="back-link" onclick="showPage('home')">← Cancelar</span><button class="btn btn--primary" onclick="goToPaso2()">Continuar →</button></div>
-  </div></div>
-  <div class="security-bar"><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Conexión cifrada · Sin cookies · Tor recomendado</div>
-</div>
-
-<div class="page" id="page-paso2">
-  <div class="form-wrapper"><div class="form-card container--form" style="margin:0 auto">
-    <div class="progress"><span>Paso 2 de 3</span><div class="progress__dots"><div class="progress__dot done"></div><div class="progress__dot active"></div><div class="progress__dot"></div></div></div>
-    <div class="form-title">Cuenta lo que sabes</div>
-    <div style="display:flex;flex-direction:column;gap:24px">
-      <div class="form-group"><label class="form-label">¿Qué ocurrió? <span class="req">*</span></label><textarea id="relato" class="form-textarea" placeholder="Cuenta lo que sabes con el mayor detalle posible. Quiénes están involucrados, qué hicieron, cómo lo sabes. Evita incluir información que pueda identificarte a ti." required></textarea><span class="form-hint">Campo obligatorio.</span></div>
-      <div class="form-group"><label class="form-label">¿Cuándo ocurrió? (aproximado)</label><input id="fecha" type="date" class="form-input" /></div>
-      <div class="form-group"><label class="form-label">¿Dónde ocurrió? (municipio, departamento)</label><input id="lugar" type="text" class="form-input" placeholder="Ej. Sipí, Chocó" /></div>
-      <div class="form-group">
-        <label class="form-label">Adjuntar evidencia (opcional)</label>
-        <div class="dropzone" id="dropzone" onclick="document.getElementById('fileInput').click()"><div class="dropzone__text">Arrastra archivos aquí o haz clic</div><div class="dropzone__hint">Máx. 25 MB por archivo · PDF, imágenes, audio, documentos</div></div>
-        <input type="file" id="fileInput" multiple style="display:none" onchange="handleFiles(this)" />
-        <div id="fileList" style="margin-top:8px;display:flex;flex-direction:column;gap:6px"></div>
-        <div class="alert alert--amber mt-2"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Eliminamos automáticamente metadatos EXIF, GPS, autor y fechas del sistema antes de guardar cualquier archivo.</div>
+  <footer>
+    <div class="container">
+      <div class="footer__inner">
+        <span>© 2026 CanalSeguro · Operado de forma independiente</span>
+        <div class="footer__links">
+          <a onclick="showPage('acerca-de')">Código abierto</a>
+          <a onclick="showPage('acerca-de')">Clave PGP</a>
+          <a onclick="showPage('acerca-de')">Acerca de</a>
+          <a onclick="showPage('faq')">Aviso legal</a>
+        </div>
       </div>
     </div>
-    <div class="form-actions"><span class="back-link" onclick="showPage('paso1')">← Atrás</span><button class="btn btn--primary" onclick="goToPaso3()">Continuar →</button></div>
-  </div></div>
-  <div class="security-bar"><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Conexión cifrada · Sin cookies · Tor recomendado</div>
+  </footer>
 </div>
 
+
+<!-- ============================================================
+     PAGE: PASO 1 — CATEGORÍA
+============================================================ -->
+<div class="page" id="page-paso1">
+  <div class="form-wrapper">
+    <div class="form-card container--form" style="margin:0 auto">
+      <!-- Progress -->
+      <div class="progress">
+        <span>Paso 1 de 3</span>
+        <div class="progress__dots">
+          <div class="progress__dot active"></div>
+          <div class="progress__dot"></div>
+          <div class="progress__dot"></div>
+        </div>
+      </div>
+      <div class="form-title">¿Qué quieres denunciar?</div>
+      <div class="form-subtitle">Selecciona la categoría principal del hecho.</div>
+
+      <div id="categoryOptions" style="display:flex;flex-direction:column;gap:12px">
+        <!-- Each option is a radio card -->
+        <div class="card card--radio" onclick="selectCategory(this,'corrupcion')" data-val="corrupcion">
+          <label style="cursor:pointer;display:flex;gap:12px;align-items:flex-start">
+            <input type="radio" name="cat" value="corrupcion" style="margin-top:3px;accent-color:var(--primary);" />
+            <div>
+              <div style="font-weight:600;color:var(--text);margin-bottom:3px">Corrupción administrativa</div>
+              <div style="font-size:13px;color:var(--secondary)">Contratación irregular, desvío de recursos, abuso del cargo</div>
+            </div>
+          </label>
+        </div>
+        <div class="card card--radio" onclick="selectCategory(this,'mineria')" data-val="mineria">
+          <label style="cursor:pointer;display:flex;gap:12px;align-items:flex-start">
+            <input type="radio" name="cat" value="mineria" style="margin-top:3px;accent-color:var(--primary);" />
+            <div>
+              <div style="font-weight:600;color:var(--text);margin-bottom:3px">Minería ilegal y delitos ambientales</div>
+              <div style="font-size:13px;color:var(--secondary)">Extracción sin títulos, daño ambiental, mercurio</div>
+            </div>
+          </label>
+        </div>
+        <div class="card card--radio" onclick="selectCategory(this,'crimen')" data-val="crimen">
+          <label style="cursor:pointer;display:flex;gap:12px;align-items:flex-start">
+            <input type="radio" name="cat" value="crimen" style="margin-top:3px;accent-color:var(--primary);" />
+            <div>
+              <div style="font-weight:600;color:var(--text);margin-bottom:3px">Crimen organizado</div>
+              <div style="font-size:13px;color:var(--secondary)">Grupos armados, extorsión, narcotráfico, trata</div>
+            </div>
+          </label>
+        </div>
+        <div class="card card--radio" onclick="selectCategory(this,'abuso')" data-val="abuso">
+          <label style="cursor:pointer;display:flex;gap:12px;align-items:flex-start">
+            <input type="radio" name="cat" value="abuso" style="margin-top:3px;accent-color:var(--primary);" />
+            <div>
+              <div style="font-weight:600;color:var(--text);margin-bottom:3px">Abuso de autoridad</div>
+              <div style="font-size:13px;color:var(--secondary)">Excesos de funcionarios públicos o fuerza pública</div>
+            </div>
+          </label>
+        </div>
+        <div class="card card--radio" onclick="selectCategory(this,'otro')" data-val="otro">
+          <label style="cursor:pointer;display:flex;gap:12px;align-items:flex-start">
+            <input type="radio" name="cat" value="otro" style="margin-top:3px;accent-color:var(--primary);" />
+            <div>
+              <div style="font-weight:600;color:var(--text);margin-bottom:3px">Otro</div>
+              <div style="font-size:13px;color:var(--secondary)">Describe en el siguiente paso</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <span class="back-link" onclick="showPage('home')">← Cancelar</span>
+        <button class="btn btn--primary" onclick="goToPaso2()">Continuar →</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="security-bar">
+    <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+      <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+    </svg>
+    Conexión cifrada · Sin cookies · Tor recomendado
+  </div>
+</div>
+
+
+<!-- ============================================================
+     PAGE: PASO 2 — RELATO Y EVIDENCIA
+============================================================ -->
+<div class="page" id="page-paso2">
+  <div class="form-wrapper">
+    <div class="form-card container--form" style="margin:0 auto">
+      <div class="progress">
+        <span>Paso 2 de 3</span>
+        <div class="progress__dots">
+          <div class="progress__dot done"></div>
+          <div class="progress__dot active"></div>
+          <div class="progress__dot"></div>
+        </div>
+      </div>
+      <div class="form-title">Cuenta lo que sabes</div>
+      <div class="form-subtitle"></div>
+
+      <div style="display:flex;flex-direction:column;gap:24px">
+        <div class="form-group">
+          <label class="form-label">¿Qué ocurrió? <span class="req">*</span></label>
+          <textarea id="relato" class="form-textarea" placeholder="Cuenta lo que sabes con el mayor detalle posible. Quiénes están involucrados, qué hicieron, cómo lo sabes. Evita incluir información que pueda identificarte a ti." required></textarea>
+          <span class="form-hint">Campo obligatorio.</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">¿Cuándo ocurrió? (aproximado)</label>
+          <input id="fecha" type="date" class="form-input" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">¿Dónde ocurrió? (municipio, departamento)</label>
+          <input id="lugar" type="text" class="form-input" placeholder="Ej. Sipí, Chocó" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Adjuntar evidencia (opcional)</label>
+          <div class="dropzone" id="dropzone" onclick="document.getElementById('fileInput').click()">
+            <div class="dropzone__icon">
+              <svg width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/>
+              </svg>
+            </div>
+            <div class="dropzone__text">Arrastra archivos aquí o haz clic</div>
+            <div class="dropzone__hint">Máx. 25 MB por archivo · PDF, imágenes, audio, documentos</div>
+          </div>
+          <input type="file" id="fileInput" multiple style="display:none" onchange="handleFiles(this)" />
+          <div id="fileList" style="margin-top:8px;display:flex;flex-direction:column;gap:6px"></div>
+          <div class="alert alert--amber mt-2">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Eliminamos automáticamente metadatos EXIF, GPS, autor y fechas del sistema antes de guardar cualquier archivo.
+          </div>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <span class="back-link" onclick="showPage('paso1')">← Atrás</span>
+        <button class="btn btn--primary" onclick="goToPaso3()">Continuar →</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="security-bar">
+    <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+      <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+    </svg>
+    Conexión cifrada · Sin cookies · Tor recomendado
+  </div>
+</div>
+
+
+<!-- ============================================================
+     PAGE: PASO 3 — REVISIÓN
+============================================================ -->
 <div class="page" id="page-paso3">
-  <div class="form-wrapper"><div class="form-card container--form" style="margin:0 auto">
-    <div class="progress"><span>Paso 3 de 3</span><div class="progress__dots"><div class="progress__dot done"></div><div class="progress__dot done"></div><div class="progress__dot active"></div></div></div>
-    <div class="form-title">Revisa antes de enviar</div>
-    <div class="form-subtitle">Verifica los datos. Una vez enviada la denuncia, no podrás modificarla.</div>
-    <table class="review-table">
-      <tr><td>Categoría</td><td id="rev-cat">—</td><td><span class="edit-link" onclick="showPage('paso1')">Editar</span></td></tr>
-      <tr><td>Fecha aproximada</td><td id="rev-fecha">—</td><td><span class="edit-link" onclick="showPage('paso2')">Editar</span></td></tr>
-      <tr><td>Lugar</td><td id="rev-lugar">—</td><td><span class="edit-link" onclick="showPage('paso2')">Editar</span></td></tr>
-      <tr><td>Relato</td><td id="rev-relato" style="max-width:300px;word-break:break-word">—</td><td><span class="edit-link" onclick="showPage('paso2')">Editar</span></td></tr>
-      <tr><td>Evidencia</td><td id="rev-evidencia">Ningún archivo adjunto</td><td><span class="edit-link" onclick="showPage('paso2')">Editar</span></td></tr>
-    </table>
-    <div class="alert alert--amber mt-3"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><div><strong>Al enviar esta denuncia aceptas que:</strong><ul style="margin-top:6px;display:flex;flex-direction:column;gap:4px"><li style="font-size:13px">• La información entregada es cierta a tu conocimiento.</li><li style="font-size:13px">• No revelarás el código de seguimiento a terceros.</li><li style="font-size:13px">• Recibirás un código único que no podrá recuperarse si lo pierdes.</li></ul></div></div>
-    <div class="mt-3"><label class="checkbox-wrap"><input type="checkbox" id="acceptTerms" /><span>He leído y acepto los términos del envío</span></label></div>
-    <div class="form-actions"><span class="back-link" onclick="showPage('paso2')">← Atrás</span><button class="btn btn--primary" onclick="enviarDenuncia()">Enviar denuncia</button></div>
-  </div></div>
-  <div class="security-bar"><svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Conexión cifrada · Sin cookies · Tor recomendado</div>
+  <div class="form-wrapper">
+    <div class="form-card container--form" style="margin:0 auto">
+      <div class="progress">
+        <span>Paso 3 de 3</span>
+        <div class="progress__dots">
+          <div class="progress__dot done"></div>
+          <div class="progress__dot done"></div>
+          <div class="progress__dot active"></div>
+        </div>
+      </div>
+      <div class="form-title">Revisa antes de enviar</div>
+      <div class="form-subtitle">Verifica los datos. Una vez enviada la denuncia, no podrás modificarla.</div>
+
+      <table class="review-table">
+        <tr>
+          <td>Categoría</td>
+          <td id="rev-cat">—</td>
+          <td><span class="edit-link" onclick="showPage('paso1')">Editar</span></td>
+        </tr>
+        <tr>
+          <td>Fecha aproximada</td>
+          <td id="rev-fecha">—</td>
+          <td><span class="edit-link" onclick="showPage('paso2')">Editar</span></td>
+        </tr>
+        <tr>
+          <td>Lugar</td>
+          <td id="rev-lugar">—</td>
+          <td><span class="edit-link" onclick="showPage('paso2')">Editar</span></td>
+        </tr>
+        <tr>
+          <td>Relato</td>
+          <td id="rev-relato" style="max-width:300px;word-break:break-word">—</td>
+          <td><span class="edit-link" onclick="showPage('paso2')">Editar</span></td>
+        </tr>
+        <tr>
+          <td>Evidencia</td>
+          <td id="rev-evidencia">Ningún archivo adjunto</td>
+          <td><span class="edit-link" onclick="showPage('paso2')">Editar</span></td>
+        </tr>
+      </table>
+
+      <div class="alert alert--amber mt-3">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <div>
+          <strong>Al enviar esta denuncia aceptas que:</strong>
+          <ul style="margin-top:6px;display:flex;flex-direction:column;gap:4px">
+            <li style="font-size:13px">• La información entregada es cierta a tu conocimiento.</li>
+            <li style="font-size:13px">• No revelarás el código de seguimiento a terceros.</li>
+            <li style="font-size:13px">• Recibirás un código único que no podrá recuperarse si lo pierdes.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <label class="checkbox-wrap">
+          <input type="checkbox" id="acceptTerms" />
+          <span>He leído y acepto los términos del envío</span>
+        </label>
+      </div>
+
+      <div class="form-actions">
+        <span class="back-link" onclick="showPage('paso2')">← Atrás</span>
+        <button class="btn btn--primary" onclick="enviarDenuncia()">Enviar denuncia</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="security-bar">
+    <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+      <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+    </svg>
+    Conexión cifrada · Sin cookies · Tor recomendado
+  </div>
 </div>
 
+
+<!-- ============================================================
+     PAGE: CONFIRMACIÓN
+============================================================ -->
 <div class="page" id="page-confirmacion">
-  <div class="confirmation"><div class="confirmation__inner">
-    <div class="confirmation__icon"><svg width="36" height="36" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg></div>
-    <h1 class="confirmation__title">Tu denuncia fue recibida</h1>
-    <p class="confirmation__sub">El equipo revisará la información en las próximas horas. Este es tu código de seguimiento:</p>
-    <div class="code-box"><span class="code-box__code" id="genCode">CS-7KQ3-9XPM-L2FN</span><button class="btn btn--ghost btn--sm" onclick="copiarCodigo()">Copiar</button></div>
-    <div class="alert alert--amber mt-3"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><div><strong>Guárdalo ahora. No podemos recuperarlo.</strong><br>Sin este código no podrás consultar el estado de tu denuncia ni agregar información.</div></div>
-    <div class="recommendations mt-3"><div style="font-size:14px;font-weight:600;margin-bottom:10px">Recomendaciones para guardarlo:</div><ul><li>Escríbelo a mano en un papel y guárdalo en un lugar seguro.</li><li>Si lo guardas digitalmente, usa un gestor de contraseñas (Bitwarden, KeePassXC).</li><li>No lo envíes por WhatsApp, SMS ni correo sin cifrar.</li><li>No lo compartas con nadie. Quien tenga el código puede ver tu denuncia.</li></ul></div>
-    <div class="confirm-actions"><button class="btn btn--ghost" onclick="showPage('consultar')">Consultar estado más tarde</button><button class="btn btn--primary" onclick="showPage('home')">Volver al inicio</button></div>
-  </div></div>
-  <footer><div class="container"><div class="footer__inner"><span>© 2026 CanalSeguro · Operado de forma independiente</span><div class="footer__links"><a onclick="showPage('acerca-de')">Código abierto</a><a onclick="showPage('acerca-de')">Clave PGP</a><a onclick="showPage('acerca-de')">Acerca de</a></div></div></div></footer>
+  <div class="confirmation">
+    <div class="confirmation__inner">
+      <div class="confirmation__icon">
+        <svg width="36" height="36" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2.5">
+          <path d="M20 6L9 17l-5-5"/>
+        </svg>
+      </div>
+      <h1 class="confirmation__title">Tu denuncia fue recibida</h1>
+      <p class="confirmation__sub">El equipo revisará la información en las próximas horas. Este es tu código de seguimiento:</p>
+
+      <div class="code-box">
+        <span class="code-box__code" id="genCode">CS-7KQ3-9XPM-L2FN</span>
+        <button class="btn btn--ghost btn--sm" onclick="copiarCodigo()">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          Copiar
+        </button>
+      </div>
+
+      <div class="alert alert--amber mt-3">
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <div><strong>Guárdalo ahora. No podemos recuperarlo.</strong><br>Sin este código no podrás consultar el estado de tu denuncia ni agregar información.</div>
+      </div>
+
+      <div class="recommendations mt-3">
+        <div style="font-size:14px;font-weight:600;margin-bottom:10px">Recomendaciones para guardarlo:</div>
+        <ul>
+          <li>Escríbelo a mano en un papel y guárdalo en un lugar seguro.</li>
+          <li>Si lo guardas digitalmente, usa un gestor de contraseñas (Bitwarden, KeePassXC).</li>
+          <li>No lo envíes por WhatsApp, SMS ni correo sin cifrar.</li>
+          <li>No lo compartas con nadie. Quien tenga el código puede ver tu denuncia.</li>
+        </ul>
+      </div>
+
+      <div class="confirm-actions">
+        <button class="btn btn--ghost" onclick="showPage('consultar')">Consultar estado más tarde</button>
+        <button class="btn btn--primary" onclick="showPage('home')">Volver al inicio</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="footer__inner">
+        <span>© 2026 CanalSeguro · Operado de forma independiente</span>
+        <div class="footer__links">
+          <a onclick="showPage('acerca-de')">Código abierto</a>
+          <a onclick="showPage('acerca-de')">Clave PGP</a>
+          <a onclick="showPage('acerca-de')">Acerca de</a>
+        </div>
+      </div>
+    </div>
+  </footer>
 </div>
 
+
+<!-- ============================================================
+     PAGE: CONSULTAR ESTADO
+============================================================ -->
 <div class="page" id="page-consultar">
   <div class="container" style="flex:1">
-    <div class="page-header"><h1 class="page-header__title">Consulta el estado de tu denuncia</h1><p class="page-header__sub">Ingresa el código único que recibiste al momento de enviar la denuncia.</p></div>
+    <div class="page-header">
+      <h1 class="page-header__title">Consulta el estado de tu denuncia</h1>
+      <p class="page-header__sub">Ingresa el código único que recibiste al momento de enviar la denuncia.</p>
+    </div>
+
     <div style="max-width:var(--form-w)">
-      <div class="form-group mb-3"><label class="form-label">Código de seguimiento</label><div style="display:flex;gap:12px"><input id="consultaCodigo" type="text" class="form-input mono" placeholder="CS-XXXX-XXXX-XXXX" style="letter-spacing:.06em" /><button class="btn btn--primary" onclick="consultarCaso()" style="flex-shrink:0">Consultar</button></div></div>
+      <div class="form-group mb-3">
+        <label class="form-label">Código de seguimiento</label>
+        <div style="display:flex;gap:12px">
+          <input id="consultaCodigo" type="text" class="form-input mono" placeholder="CS-XXXX-XXXX-XXXX" style="letter-spacing:.06em" />
+          <button class="btn btn--primary" onclick="consultarCaso()" style="flex-shrink:0">Consultar</button>
+        </div>
+      </div>
+
+      <!-- CASO RESULT (shown after query) -->
       <div id="casoResult" style="display:none">
-        <div style="margin-bottom:24px"><h2 style="font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:600;color:var(--primary);margin-bottom:8px" id="casoId">Caso CS-7KQ3-9XPM-L2FN</h2><div style="display:flex;align-items:center;gap:10px"><span style="font-size:14px;color:var(--secondary);">Estado actual:</span><span class="status-badge status-badge--review">En revisión</span></div></div>
+        <div style="margin-bottom:24px">
+          <h2 style="font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:600;color:var(--primary);margin-bottom:8px" id="casoId">Caso CS-7KQ3-9XPM-L2FN</h2>
+          <div style="display:flex;align-items:center;gap:10px">
+            <span style="font-size:14px;color:var(--secondary);">Estado actual:</span>
+            <span class="status-badge status-badge--review">En revisión</span>
+          </div>
+        </div>
+
         <h3 style="font-size:16px;font-weight:600;color:var(--primary);margin-bottom:16px">Línea de tiempo</h3>
         <div class="timeline">
-          <div class="timeline__item"><div class="timeline__line"></div><div class="timeline__dot done"></div><div class="timeline__body"><div class="timeline__date">2026-04-19</div><div class="timeline__title">Denuncia recibida</div><div class="timeline__desc">Se confirmó la llegada del mensaje cifrado al buzón del equipo.</div></div></div>
-          <div class="timeline__item"><div class="timeline__line"></div><div class="timeline__dot done"></div><div class="timeline__body"><div class="timeline__date">2026-04-21</div><div class="timeline__title">En revisión por el equipo editorial</div><div class="timeline__desc">Se asignó a un analista. Verificación de contenido y evidencia en curso.</div></div></div>
-          <div class="timeline__item"><div class="timeline__dot pending"></div><div class="timeline__body"><div class="timeline__date" style="color:var(--secondary)">Pendiente</div><div class="timeline__title" style="color:var(--secondary)">Decisión</div><div class="timeline__desc">Aceptación, descarte o solicitud de información adicional.</div></div></div>
+          <div class="timeline__item">
+            <div class="timeline__line"></div>
+            <div class="timeline__dot done"></div>
+            <div class="timeline__body">
+              <div class="timeline__date">2026-04-19</div>
+              <div class="timeline__title">Denuncia recibida</div>
+              <div class="timeline__desc">Se confirmó la llegada del mensaje cifrado al buzón del equipo.</div>
+            </div>
+          </div>
+          <div class="timeline__item">
+            <div class="timeline__line"></div>
+            <div class="timeline__dot done"></div>
+            <div class="timeline__body">
+              <div class="timeline__date">2026-04-21</div>
+              <div class="timeline__title">En revisión por el equipo editorial</div>
+              <div class="timeline__desc">Se asignó a un analista. Verificación de contenido y evidencia en curso.</div>
+            </div>
+          </div>
+          <div class="timeline__item">
+            <div class="timeline__dot pending"></div>
+            <div class="timeline__body">
+              <div class="timeline__date" style="color:var(--secondary)">Pendiente</div>
+              <div class="timeline__title" style="color:var(--secondary)">Decisión</div>
+              <div class="timeline__desc">Aceptación, descarte o solicitud de información adicional.</div>
+            </div>
+          </div>
         </div>
-        <div class="alert alert--green mt-3"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>Tu caso sigue activo. Vuelve en cualquier momento con tu código.</div>
+
+        <div class="alert alert--green mt-3">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+          Tu caso sigue activo. Vuelve en cualquier momento con tu código.
+        </div>
+
         <button class="btn btn--ghost mt-3">Agregar información al caso</button>
       </div>
-      <div id="casoError" style="display:none"><div class="alert alert--amber"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Código no encontrado. Verifica que lo hayas ingresado correctamente.</div></div>
+
+      <!-- Error state -->
+      <div id="casoError" style="display:none">
+        <div class="alert alert--amber">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Código no encontrado. Verifica que lo hayas ingresado correctamente. El código es sensible a mayúsculas y minúsculas.
+        </div>
+      </div>
     </div>
   </div>
-  <footer><div class="container"><div class="footer__inner"><span>© 2026 CanalSeguro · Operado de forma independiente</span><div class="footer__links"><a onclick="showPage('acerca-de')">Código abierto</a><a onclick="showPage('acerca-de')">Clave PGP</a><a onclick="showPage('acerca-de')">Acerca de</a></div></div></div></footer>
+
+  <footer>
+    <div class="container">
+      <div class="footer__inner">
+        <span>© 2026 CanalSeguro · Operado de forma independiente</span>
+        <div class="footer__links">
+          <a onclick="showPage('acerca-de')">Código abierto</a>
+          <a onclick="showPage('acerca-de')">Clave PGP</a>
+          <a onclick="showPage('acerca-de')">Acerca de</a>
+        </div>
+      </div>
+    </div>
+  </footer>
 </div>
 
+
+<!-- ============================================================
+     PAGE: FAQ
+============================================================ -->
 <div class="page" id="page-faq">
   <div class="container" style="flex:1">
-    <div class="page-header"><h1 class="page-header__title">Preguntas frecuentes</h1><p class="page-header__sub">Resolvemos tus dudas sobre seguridad y funcionamiento de CanalSeguro.</p></div>
+    <div class="page-header">
+      <h1 class="page-header__title">Preguntas frecuentes</h1>
+      <p class="page-header__sub">Resolvemos tus dudas sobre seguridad y funcionamiento de CanalSeguro.</p>
+    </div>
+
     <div style="max-width:720px">
-      <div class="faq-item"><div class="faq-item__q" onclick="toggleFaq(this)">¿Realmente soy anónimo al usar CanalSeguro?<svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div><div class="faq-item__a">Sí, siempre que accedas desde Tor Browser. No recolectamos IP, cookies, ni ningún dato que pueda asociarse a tu identidad. El sistema está diseñado para no poder identificarte ni aunque quisiéramos.</div></div>
-      <div class="faq-item"><div class="faq-item__q" onclick="toggleFaq(this)">¿Qué pasa si pierdo mi código de seguimiento?<svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div><div class="faq-item__a">No hay forma de recuperarlo. Esto es una característica de seguridad, no un fallo. El código es la única llave de tu caso y nadie más puede acceder a él. Guárdalo en un lugar seguro al recibirlo.</div></div>
-      <div class="faq-item"><div class="faq-item__q" onclick="toggleFaq(this)">¿Quién puede ver mi denuncia?<svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div><div class="faq-item__a">Únicamente el equipo editorial de CanalSeguro, que accede al contenido descifrado de forma segura. No compartimos ni vendemos información a terceros, entidades estatales ni empresas privadas.</div></div>
-      <div class="faq-item"><div class="faq-item__q" onclick="toggleFaq(this)">¿Cómo sé que los metadatos de mis archivos realmente se eliminan?<svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div><div class="faq-item__a">El proceso de limpieza está implementado en el código fuente público del proyecto, auditable en el repositorio. Utilizamos ExifTool y MAT2 sobre cada archivo recibido antes de almacenarlo.</div></div>
-      <div class="faq-item"><div class="faq-item__q" onclick="toggleFaq(this)">¿CanalSeguro es un canal oficial del Estado colombiano?<svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div><div class="faq-item__a">No. CanalSeguro es un canal independiente, operado fuera de la infraestructura estatal y financiado con fuentes públicas declaradas en la página Acerca de. Su independencia de las entidades estatales es una garantía fundamental para el denunciante.</div></div>
-      <div class="faq-item"><div class="faq-item__q" onclick="toggleFaq(this)">¿Puedo denunciar desde mi teléfono?<svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></div><div class="faq-item__a">Sí, el sitio es compatible con dispositivos móviles. Sin embargo, para máximo anonimato recomendamos usar Tor Browser en escritorio. Si usas el teléfono, considera Tor Browser para Android en F-Droid.</div></div>
+      <div class="faq-item">
+        <div class="faq-item__q" onclick="toggleFaq(this)">
+          ¿Realmente soy anónimo al usar CanalSeguro?
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="faq-item__a">Sí, siempre que accedas desde Tor Browser. No recolectamos IP, cookies, ni ningún dato que pueda asociarse a tu identidad. El sistema está diseñado para no poder identificarte ni aunque quisiéramos.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-item__q" onclick="toggleFaq(this)">
+          ¿Qué pasa si pierdo mi código de seguimiento?
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="faq-item__a">No hay forma de recuperarlo. Esto es una característica de seguridad, no un fallo. El código es la única "llave" de tu caso y nadie más puede acceder a él. Guárdalo en un lugar seguro al recibirlo.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-item__q" onclick="toggleFaq(this)">
+          ¿Quién puede ver mi denuncia?
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="faq-item__a">Únicamente el equipo editorial de CanalSeguro, que accede al contenido descifrado de forma segura. No compartimos ni vendemos información a terceros, entidades estatales ni empresas privadas.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-item__q" onclick="toggleFaq(this)">
+          ¿Cómo sé que los metadatos de mis archivos realmente se eliminan?
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="faq-item__a">El proceso de limpieza de metadatos está implementado en el código fuente público del proyecto, auditable en el repositorio enlazado desde la página «Acerca de». Utilizamos ExifTool y MAT2 sobre cada archivo recibido antes de almacenarlo.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-item__q" onclick="toggleFaq(this)">
+          ¿CanalSeguro es un canal oficial del Estado colombiano?
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="faq-item__a">No. CanalSeguro es un canal independiente, operado fuera de la infraestructura estatal y financiado con fuentes públicas declaradas en la página «Acerca de». Su independencia de las entidades estatales es una garantía fundamental para el denunciante.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-item__q" onclick="toggleFaq(this)">
+          ¿Puedo denunciar desde mi teléfono?
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="faq-item__a">Sí, el sitio es compatible con dispositivos móviles. Sin embargo, para máximo anonimato recomendamos usar Tor Browser en escritorio. Si usas el teléfono, considera Tor Browser para Android (también llamado Tor Browser para Android en F-Droid).</div>
+      </div>
     </div>
   </div>
-  <footer><div class="container"><div class="footer__inner"><span>© 2026 CanalSeguro · Operado de forma independiente</span><div class="footer__links"><a onclick="showPage('acerca-de')">Código abierto</a><a onclick="showPage('acerca-de')">Clave PGP</a><a onclick="showPage('acerca-de')">Acerca de</a></div></div></div></footer>
+  <footer>
+    <div class="container">
+      <div class="footer__inner">
+        <span>© 2026 CanalSeguro · Operado de forma independiente</span>
+        <div class="footer__links">
+          <a onclick="showPage('acerca-de')">Código abierto</a>
+          <a onclick="showPage('acerca-de')">Clave PGP</a>
+          <a onclick="showPage('acerca-de')">Acerca de</a>
+        </div>
+      </div>
+    </div>
+  </footer>
 </div>
 
+
+<!-- ============================================================
+     PAGE: ACERCA DE
+============================================================ -->
 <div class="page" id="page-acerca-de">
   <div class="container" style="flex:1">
-    <div class="page-header"><h1 class="page-header__title">Acerca de CanalSeguro</h1><p class="page-header__sub">Transparencia total: quiénes somos, cómo nos financiamos y cómo verificar nuestras promesas.</p></div>
+    <div class="page-header">
+      <h1 class="page-header__title">Acerca de CanalSeguro</h1>
+      <p class="page-header__sub">Transparencia total: quiénes somos, cómo nos financiamos y cómo verificar nuestras promesas.</p>
+    </div>
+
     <div style="max-width:720px;display:flex;flex-direction:column;gap:40px;padding-bottom:64px">
-      <div><h2 style="font-size:20px;font-weight:700;color:var(--primary);margin-bottom:12px">¿Qué es CanalSeguro?</h2><p style="font-size:15px;color:var(--secondary);line-height:1.7">CanalSeguro es un canal independiente de denuncia ciudadana diseñado para el contexto colombiano. Toma como referentes directos SecureDrop (Freedom of the Press Foundation) y GlobaLeaks, adaptando sus principios a la normativa y realidad institucional del país. El proyecto nació de la constatación de que los canales oficiales de denuncia exigen identificación, dejan rastros técnicos y generan desconfianza sobre quién accede a la información.</p></div>
-      <div><h2 style="font-size:20px;font-weight:700;color:var(--primary);margin-bottom:12px">Financiamiento</h2><p style="font-size:15px;color:var(--secondary);line-height:1.7">El proyecto recibe financiamiento de organizaciones de sociedad civil independientes. La lista actualizada de fuentes de financiamiento se publica trimestralmente. No aceptamos financiamiento de entidades estatales colombianas ni de empresas con intereses en los sectores que cubrimos.</p></div>
-      <div><h2 style="font-size:20px;font-weight:700;color:var(--primary);margin-bottom:12px">Código fuente</h2><p style="font-size:15px;color:var(--secondary);line-height:1.7;margin-bottom:12px">Todo el código del sitio es público y auditable. Puedes revisar la implementación del cifrado, la limpieza de metadatos y la generación de códigos de seguimiento en el repositorio oficial.</p><div class="alert alert--blue"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg><span>Repositorio: <strong>github.com/josecr666/canalseguro</strong></span></div></div>
-      <div><h2 style="font-size:20px;font-weight:700;color:var(--primary);margin-bottom:12px">Aviso legal</h2><p style="font-size:15px;color:var(--secondary);line-height:1.7">CanalSeguro es un canal de comunicación para la denuncia de hechos de interés público. El uso responsable del canal implica reportar únicamente hechos que, a juicio del denunciante, sean verídicos. El canal no puede ser usado para denuncias falsas, difamación o acoso.</p></div>
+      <div>
+        <h2 style="font-size:20px;font-weight:700;color:var(--primary);margin-bottom:12px">¿Qué es CanalSeguro?</h2>
+        <p style="font-size:15px;color:var(--secondary);line-height:1.7">CanalSeguro es un canal independiente de denuncia ciudadana diseñado para el contexto colombiano. Toma como referentes directos SecureDrop (Freedom of the Press Foundation) y GlobaLeaks, adaptando sus principios a la normativa y realidad institucional del país. El proyecto nació de la constatación de que los canales oficiales de denuncia exigen identificación, dejan rastros técnicos y generan desconfianza sobre quién accede a la información.</p>
+      </div>
+
+      <div>
+        <h2 style="font-size:20px;font-weight:700;color:var(--primary);margin-bottom:12px">Financiamiento</h2>
+        <p style="font-size:15px;color:var(--secondary);line-height:1.7">El proyecto recibe financiamiento de organizaciones de sociedad civil independientes. La lista actualizada de fuentes de financiamiento se publica trimestralmente. No aceptamos financiamiento de entidades estatales colombianas ni de empresas con intereses en los sectores que cubrimos.</p>
+      </div>
+
+      <div>
+        <h2 style="font-size:20px;font-weight:700;color:var(--primary);margin-bottom:12px">Código fuente</h2>
+        <p style="font-size:15px;color:var(--secondary);line-height:1.7;margin-bottom:12px">Todo el código del sitio es público y auditable. Puedes revisar la implementación del cifrado, la limpieza de metadatos y la generación de códigos de seguimiento en el repositorio oficial.</p>
+        <div class="alert alert--blue">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+          <span>Repositorio: <strong>github.com/canalseguro/canalseguro</strong></span>
+        </div>
+      </div>
+
+      <div>
+        <h2 style="font-size:20px;font-weight:700;color:var(--primary);margin-bottom:12px">Clave pública PGP</h2>
+        <p style="font-size:15px;color:var(--secondary);line-height:1.7;margin-bottom:12px">Si necesitas comunicarte con el equipo de forma cifrada antes de enviar una denuncia, puedes usar nuestra clave pública PGP:</p>
+        <div class="pgp-box">
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+mQINBGXy7AEBEAD3kVpZ+5aLR3dqvJv0mFq3A9/OcYpX1lKi3a8eH5vRt2m9
+qXJzU8KMw6jP1YxH2nT0/E+fYr7BlKDo9S3VZmcR1oAh4iXpL2sNj8k7WcqP
+(... clave completa disponible en el repositorio del proyecto ...)
+-----END PGP PUBLIC KEY BLOCK-----</div>
+      </div>
+
+      <div>
+        <h2 style="font-size:20px;font-weight:700;color:var(--primary);margin-bottom:12px">Aviso legal</h2>
+        <p style="font-size:15px;color:var(--secondary);line-height:1.7">CanalSeguro es un canal de comunicación para la denuncia de hechos de interés público. El uso responsable del canal implica reportar únicamente hechos que, a juicio del denunciante, sean verídicos. El canal no puede ser usado para denuncias falsas, difamación o acoso. Los operadores del canal se reservan el derecho de descartar denuncias que no cumplan con los criterios mínimos de plausibilidad o que no correspondan a las categorías declaradas.</p>
+      </div>
     </div>
   </div>
-  <footer><div class="container"><div class="footer__inner"><span>© 2026 CanalSeguro · Operado de forma independiente</span><div class="footer__links"><a onclick="showPage('acerca-de')">Código abierto</a><a onclick="showPage('acerca-de')">Clave PGP</a><a onclick="showPage('acerca-de')">Acerca de</a></div></div></div></footer>
+
+  <footer>
+    <div class="container">
+      <div class="footer__inner">
+        <span>© 2026 CanalSeguro · Operado de forma independiente</span>
+        <div class="footer__links">
+          <a onclick="showPage('acerca-de')">Código abierto</a>
+          <a onclick="showPage('acerca-de')">Clave PGP</a>
+          <a onclick="showPage('acerca-de')">Acerca de</a>
+        </div>
+      </div>
+    </div>
+  </footer>
 </div>
 
+
+<!-- ============================================================
+     JAVASCRIPT
+============================================================ -->
 <script>
-  const state = { category: '', categoryLabel: '', relato: '', fecha: '', lugar: '', files: [], code: '' };
+  // ---- State ----
+  const state = {
+    category: '',
+    categoryLabel: '',
+    relato: '',
+    fecha: '',
+    lugar: '',
+    files: [],
+    code: ''
+  };
+
+  // ---- Navigation ----
   const FORM_PAGES = ['paso1','paso2','paso3','confirmacion'];
+
   function showPage(name) {
+    // Hide all pages
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById('page-' + name).classList.add('active');
+
+    // Toggle navbar variant
     const inForm = FORM_PAGES.includes(name);
     document.getElementById('navNormal').style.display = inForm ? 'none' : 'block';
-    document.getElementById('navForm').style.display = inForm ? 'block' : 'none';
+    document.getElementById('navForm').style.display   = inForm ? 'block' : 'none';
+
     window.scrollTo(0, 0);
   }
+
   function exitForm() { showPage('home'); }
+
+  // ---- Paso 1: Category ----
   function selectCategory(card, val) {
     document.querySelectorAll('.card--radio').forEach(c => c.classList.remove('selected'));
     card.classList.add('selected');
     card.querySelector('input[type=radio]').checked = true;
-    const labels = { corrupcion: 'Corrupción administrativa', mineria: 'Minería ilegal y delitos ambientales', crimen: 'Crimen organizado', abuso: 'Abuso de autoridad', otro: 'Otro' };
-    state.category = val; state.categoryLabel = labels[val];
+    const labels = {
+      corrupcion: 'Corrupción administrativa',
+      mineria:    'Minería ilegal y delitos ambientales',
+      crimen:     'Crimen organizado',
+      abuso:      'Abuso de autoridad',
+      otro:       'Otro'
+    };
+    state.category = val;
+    state.categoryLabel = labels[val];
   }
+
   function goToPaso2() {
-    if (!state.category) { alert('Por favor selecciona una categoría antes de continuar.'); return; }
+    if (!state.category) {
+      alert('Por favor selecciona una categoría antes de continuar.');
+      return;
+    }
     showPage('paso2');
   }
+
+  // ---- Paso 2: Relato ----
   function handleFiles(input) {
     const list = document.getElementById('fileList');
     list.innerHTML = '';
     state.files = Array.from(input.files);
-    state.files.forEach(f => { const item = document.createElement('div'); item.style.cssText = 'display:flex;align-items:center;gap:8px;font-size:13px;color:var(--secondary);'; item.textContent = f.name + ' (' + (f.size/1024).toFixed(1) + ' KB)'; list.appendChild(item); });
+    state.files.forEach(f => {
+      const item = document.createElement('div');
+      item.style.cssText = 'display:flex;align-items:center;gap:8px;font-size:13px;color:var(--secondary);';
+      item.innerHTML = `<svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> ${f.name} <span style="color:#9CA3AF">(${(f.size/1024).toFixed(1)} KB)</span>`;
+      list.appendChild(item);
+    });
   }
+
   function goToPaso3() {
     const relato = document.getElementById('relato').value.trim();
-    if (!relato) { alert('Por favor describe el hecho antes de continuar.'); return; }
+    if (!relato) {
+      alert('Por favor describe el hecho antes de continuar.');
+      return;
+    }
     state.relato = relato;
-    state.fecha = document.getElementById('fecha').value || '—';
-    state.lugar = document.getElementById('lugar').value.trim() || '—';
-    document.getElementById('rev-cat').textContent = state.categoryLabel;
-    document.getElementById('rev-fecha').textContent = state.fecha;
-    document.getElementById('rev-lugar').textContent = state.lugar;
-    document.getElementById('rev-relato').textContent = state.relato.length > 120 ? state.relato.slice(0,120) + '… [vista previa truncada]' : state.relato;
-    document.getElementById('rev-evidencia').textContent = state.files.length ? state.files.length + ' archivo(s)' : 'Ningún archivo adjunto';
+    state.fecha  = document.getElementById('fecha').value || '—';
+    state.lugar  = document.getElementById('lugar').value.trim() || '—';
+
+    // Populate review table
+    document.getElementById('rev-cat').textContent     = state.categoryLabel;
+    document.getElementById('rev-fecha').textContent   = state.fecha;
+    document.getElementById('rev-lugar').textContent   = state.lugar;
+    const shortRelato = state.relato.length > 120 ? state.relato.slice(0, 120) + '… [vista previa truncada]' : state.relato;
+    document.getElementById('rev-relato').textContent  = shortRelato;
+    document.getElementById('rev-evidencia').textContent = state.files.length ? `${state.files.length} archivo(s) (${(state.files.reduce((a,f)=>a+f.size,0)/1024/1024).toFixed(1)} MB)\n${state.files.map(f=>f.name).join(', ')}` : 'Ningún archivo adjunto';
+
     showPage('paso3');
   }
+
+  // ---- Paso 3: Enviar ----
   function enviarDenuncia() {
-    if (!document.getElementById('acceptTerms').checked) { alert('Debes aceptar los términos del envío para continuar.'); return; }
+    if (!document.getElementById('acceptTerms').checked) {
+      alert('Debes aceptar los términos del envío para continuar.');
+      return;
+    }
+    // Generate a unique code
     state.code = generateCode();
     document.getElementById('genCode').textContent = state.code;
     showPage('confirmacion');
   }
+
   function generateCode() {
     const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
     const seg = () => Array.from({length:4}, () => chars[Math.floor(Math.random()*chars.length)]).join('');
-    return 'CS-' + seg() + '-' + seg() + '-' + seg();
+    return `CS-${seg()}-${seg()}-${seg()}`;
   }
+
   function copiarCodigo() {
     const code = document.getElementById('genCode').textContent;
-    if (navigator.clipboard) { navigator.clipboard.writeText(code).then(() => { alert('Código copiado: ' + code); }); } else { prompt('Copia este código:', code); }
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(code).then(() => {
+        alert('Código copiado: ' + code + '\n\nGuárdalo en un lugar seguro.');
+      });
+    } else {
+      prompt('Copia este código y guárdalo:', code);
+    }
   }
+
+  // ---- Consultar ----
   function consultarCaso() {
     const input = document.getElementById('consultaCodigo').value.trim().toUpperCase();
     document.getElementById('casoResult').style.display = 'none';
-    document.getElementById('casoError').style.display = 'none';
+    document.getElementById('casoError').style.display  = 'none';
+
     if (!input) { alert('Ingresa un código de seguimiento.'); return; }
-    if ([state.code, 'CS-7KQ3-9XPM-L2FN'].includes(input)) {
+
+    // Accept either the generated code or the demo code
+    const validCodes = [state.code, 'CS-7KQ3-9XPM-L2FN'];
+    if (validCodes.includes(input)) {
       document.getElementById('casoId').textContent = 'Caso ' + input;
       document.getElementById('casoResult').style.display = 'block';
-    } else { document.getElementById('casoError').style.display = 'block'; }
+    } else {
+      document.getElementById('casoError').style.display = 'block';
+    }
   }
-  document.addEventListener('keydown', function(e) { if (e.key === 'Enter' && document.getElementById('page-consultar').classList.contains('active')) { consultarCaso(); } });
+
+  // Enter key for search
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && document.getElementById('page-consultar').classList.contains('active')) {
+      consultarCaso();
+    }
+  });
+
+  // ---- FAQ Accordion ----
   function toggleFaq(el) {
     const answer = el.nextElementSibling;
     const isOpen = el.classList.contains('open');
-    document.querySelectorAll('.faq-item__q').forEach(q => { q.classList.remove('open'); q.nextElementSibling.classList.remove('open'); });
-    if (!isOpen) { el.classList.add('open'); answer.classList.add('open'); }
+    // Close all
+    document.querySelectorAll('.faq-item__q').forEach(q => {
+      q.classList.remove('open');
+      q.nextElementSibling.classList.remove('open');
+    });
+    if (!isOpen) {
+      el.classList.add('open');
+      answer.classList.add('open');
+    }
   }
+
+  // ---- Drag and drop ----
   const dz = document.getElementById('dropzone');
   if (dz) {
     dz.addEventListener('dragover', e => { e.preventDefault(); dz.style.borderColor = 'var(--primary)'; });
     dz.addEventListener('dragleave', () => { dz.style.borderColor = ''; });
-    dz.addEventListener('drop', e => { e.preventDefault(); dz.style.borderColor = ''; const fi = document.getElementById('fileInput'); const dt = new DataTransfer(); Array.from(e.dataTransfer.files).forEach(f => dt.items.add(f)); fi.files = dt.files; handleFiles(fi); });
+    dz.addEventListener('drop', e => {
+      e.preventDefault();
+      dz.style.borderColor = '';
+      const fi = document.getElementById('fileInput');
+      // Simulate file selection
+      const dt = new DataTransfer();
+      Array.from(e.dataTransfer.files).forEach(f => dt.items.add(f));
+      fi.files = dt.files;
+      handleFiles(fi);
+    });
   }
 </script>
 </body>
